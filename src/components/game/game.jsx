@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { Button } from "../../App";
+import { output_value } from "../../App";
+import Draw_questions from "./draw questions";
+import { hookstate, useHookstate } from "@hookstate/core";
+import state from "./state";
+import terms from "./terms of questions";
 
 const GameContainer = styled.div`
   width: 600px;
@@ -25,13 +30,34 @@ const ButtonContainer = styled.div`
   gap: 48px;
 `;
 
+export const number0 = hookstate();
+export const number1 = hookstate();
+
 const Game = () => {
+  const output = useHookstate(output_value);
+
   return (
     <GameContainer>
-      <Display></Display>
+      <Display>{output.get()}</Display>
       <ButtonContainer>
-        <Button>Tak</Button>
-        <Button>Nie</Button>
+        <Button
+          key="0"
+          onClick={(button) => {
+            output.set(Draw_questions(button.target));
+            terms(output.get(), state(button.target));
+          }}
+        >
+          Tak
+        </Button>
+        <Button
+          key="1"
+          onClick={(button) => {
+            output.set(Draw_questions(button.target));
+            terms(output.get(), state(button.target));
+          }}
+        >
+          Nie
+        </Button>
       </ButtonContainer>
     </GameContainer>
   );

@@ -1,4 +1,4 @@
-let prime_numbers = [];
+export let prime_numbers = [];
 
 const generate_prime_numbers = () => {
   for (let i = 2; i <= 100; i++) {
@@ -8,3 +8,4 @@ const generate_prime_numbers = () => {
   }
   prime_numbers.unshift(2, 3);
 };
+export default generate_prime_numbers;
