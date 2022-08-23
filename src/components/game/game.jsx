@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Button } from "../../App";
-import { output_value } from "../../App";
-import Draw_questions from "./draw questions";
 import { hookstate, useHookstate } from "@hookstate/core";
-import state from "./state";
-import terms from "./terms of questions";
+import Draw from "./draw a question";
+import { random_numbers } from "./questions";
+
+export const output = hookstate("");
 
 const GameContainer = styled.div`
   width: 600px;
@@ -29,22 +29,17 @@ const ButtonContainer = styled.div`
   justify-content: center;
   gap: 48px;
 `;
-
-export const number0 = hookstate();
-export const number1 = hookstate();
-
 const Game = () => {
-  const output = useHookstate(output_value);
-
+  const state = useHookstate(output);
   return (
     <GameContainer>
-      <Display>{output.get()}</Display>
+      <Display>{state.get()}</Display>
       <ButtonContainer>
         <Button
           key="0"
           onClick={(button) => {
-            output.set(Draw_questions(button.target));
-            terms(output.get(), state(button.target));
+            state.set(Draw(button.target));
+            console.log(random_numbers);
           }}
         >
           Tak
@@ -52,8 +47,8 @@ const Game = () => {
         <Button
           key="1"
           onClick={(button) => {
-            output.set(Draw_questions(button.target));
-            terms(output.get(), state(button.target));
+            state.set(Draw(button.target));
+            console.log(random_numbers);
           }}
         >
           Nie

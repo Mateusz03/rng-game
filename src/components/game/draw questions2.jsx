@@ -13,7 +13,6 @@ const Draw_questions = (button) => {
         Questions_function()[
           Math.floor(Math.random() * (Questions_function().length - 2)) + 2
         ];
-
       break;
     default:
       break;

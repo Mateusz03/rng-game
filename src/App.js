@@ -1,13 +1,9 @@
-import React, { useState } from "react";
 import styled from "styled-components";
+import { useState } from "react";
 import Game from "./components/game/game";
-import Draw_questions from "./components/game/draw questions";
-import { hookstate, useHookstate } from "@hookstate/core";
-// import generate_prime_numbers from "./components/game/prime numbers.jsx";
-import terms from "./components/game/terms of questions";
-import state from "./components/game/state";
-
-export const output_value = hookstate("");
+import Draw from "./components/game/draw a question";
+import { output } from "./components/game/game";
+import { useHookstate } from "@hookstate/core";
 
 const AppContainer = styled.div`
   width: 600px;
@@ -44,24 +40,23 @@ export const Button = styled.div`
 `;
 
 const App = () => {
-  const [startGame, setGame] = useState(false);
-  const output = useHookstate(output_value);
+  const state = useHookstate(output);
+  const [start, setStart] = useState(false);
   return (
     <AppContainer>
-      <Title style={{ display: startGame ? "none" : "block" }}>RNG Game</Title>
+      <Title style={{ display: start ? "none" : "block" }}>RNG Game</Title>
+
       <Button
         key="2"
         onClick={(button) => {
-          setGame(true);
-          output.set(Draw_questions(button.target));
-          // generate_prime_numbers();
-          terms(output.get(), state(button.target));
+          setStart(true);
+          state.set(Draw(button.target));
         }}
-        style={{ display: startGame ? "none" : "block" }}
+        style={{ display: start ? "none" : "block" }}
       >
         Start
       </Button>
-      {startGame === true && <Game />}
+      {start === true && <Game />}
     </AppContainer>
   );
 };
