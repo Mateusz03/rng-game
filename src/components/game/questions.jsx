@@ -4,7 +4,6 @@ export let random_numbers;
 
 const Questions_function = () => {
   random_numbers = Rng();
-  console.log("in questions", random_numbers);
   return [
     `Czy suma cyfr w liczbie jest parzysta?`,
     `Czy twoja liczba jest liczbą pierwszą?`,

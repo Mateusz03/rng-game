@@ -40,6 +40,7 @@ const Game = () => {
           onClick={(button) => {
             state.set(Draw(button.target));
             console.log(random_numbers);
+            console.log(button.target);
           }}
         >
           Tak
