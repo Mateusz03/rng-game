@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import { Button } from "../../App";
-import { hookstate, useHookstate } from "@hookstate/core";
-import Draw from "./draw a question";
-import { random_numbers } from "./questions";
+import Button from "./Button";
+import Output, { displayOut } from "./Output";
+import { useState } from "react";
 
-export const output = hookstate("");
-
-const GameContainer = styled.div`
+const Container = styled.div`
   width: 600px;
   min-height: 400px;
   display: flex;
@@ -21,6 +18,12 @@ const Display = styled.div`
   height: 72px;
   background-color: rgba(32, 32, 32, 0.3);
   box-shadow: 0px 0px 8px 3px rgba(32, 32, 32, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  text-shadow: 0px 0px 10px rgba(32, 32, 32, 1);
 `;
 
 const ButtonContainer = styled.div`
@@ -29,33 +32,31 @@ const ButtonContainer = styled.div`
   justify-content: center;
   gap: 48px;
 `;
-const Game = () => {
-  const state = useHookstate(output);
+
+const Game = (props) => {
+  const [display, setDisplay] = useState("");
   return (
-    <GameContainer>
-      <Display>{state.get()}</Display>
+    <Container style={{ display: props.setStyle ? "flex" : "none" }}>
+      <Display>{display || displayOut}</Display>
       <ButtonContainer>
         <Button
-          key="0"
+          key={1}
           onClick={(button) => {
-            state.set(Draw(button.target));
-            console.log(random_numbers);
-            console.log(button.target);
+            setDisplay(Output(button.target));
           }}
         >
           Tak
         </Button>
         <Button
-          key="1"
+          key={0}
           onClick={(button) => {
-            state.set(Draw(button.target));
-            console.log(random_numbers);
+            setDisplay(Output(button.target));
           }}
         >
           Nie
         </Button>
       </ButtonContainer>
-    </GameContainer>
+    </Container>
   );
 };
 
