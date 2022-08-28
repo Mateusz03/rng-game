@@ -1,5 +1,4 @@
 const Questions = (values, select) => {
-  console.log(values);
   const array = [
     `Czy suma cyfr w liczbie jest parzysta?`,
     `Czy twoja liczba jest liczbą pierwszą?`,

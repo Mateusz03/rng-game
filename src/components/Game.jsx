@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Button from "./Button";
 import Output, { displayOut } from "./Output";
 import { useState } from "react";
+import Action from "./Action";
+import End, { endFunction, endOutput } from "./End";
 
 const Container = styled.div`
   width: 600px;
@@ -11,6 +13,7 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 64px;
+  z-index: 0;
 `;
 
 const Display = styled.div`
@@ -34,14 +37,29 @@ const ButtonContainer = styled.div`
 `;
 
 const Game = (props) => {
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState(displayOut);
+  const [end, setEnd] = useState(false);
+  const [guess, setGuess] = useState();
   return (
-    <Container style={{ display: props.setStyle ? "flex" : "none" }}>
+    <Container
+      style={{
+        display: props.setStyle ? "flex" : "none",
+      }}
+    >
       <Display>{display || displayOut}</Display>
       <ButtonContainer>
         <Button
           key={1}
           onClick={(button) => {
+            setEnd(endFunction(button.target));
+            setGuess(endOutput(button.target));
+
+            if (isNaN(parseInt(displayOut))) {
+              Action(displayOut, button.target);
+            } else {
+              Action(display, button.target);
+            }
+
             setDisplay(Output(button.target));
           }}
         >
@@ -50,12 +68,21 @@ const Game = (props) => {
         <Button
           key={0}
           onClick={(button) => {
+            setEnd(endFunction(button.target));
+            setGuess(endOutput(button.target));
+            if (isNaN(parseInt(displayOut))) {
+              Action(displayOut, button.target);
+            } else {
+              Action(display, button.target);
+            }
+
             setDisplay(Output(button.target));
           }}
         >
           Nie
         </Button>
       </ButtonContainer>
+      <End endContainer={end} guessed={guess} />
     </Container>
   );
 };
